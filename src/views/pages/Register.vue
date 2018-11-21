@@ -19,10 +19,11 @@
                   <v-text-field v-validate="{required:true, regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,100}$/ }" v-model="password" :error-messages="errors.collect('password')" id="password" prepend-icon="lock" required name="password" label="Password" type="password"></v-text-field>
                   <v-text-field v-validate="{is: password}" v-model="passwordConfirm" :error-messages="errors.collect('password-confirm')" id="passwordConfirm" required prepend-icon="lock" name="password-confirm" label="Password Confirm" type="password"></v-text-field>
                 </v-form>
+                <v-alert dismissible :value="alert.message" icon="new_releases">{{alert.message}}</v-alert>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="handleRegister">Register</v-btn>
+                <v-btn color="primary" @click="handleRegister" :disabled="isRegistering.registering == true">Register</v-btn>{{isRegistering}}
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -33,6 +34,7 @@
 </template>
 
 <script>
+  import { mapState, mapActions } from 'vuex'
   export default {
     data(){
       return {
@@ -57,7 +59,16 @@
     mounted () {
       this.$validator.localize('en', this.dictionary)
     },
+    computed: {
+        ...mapState({
+            alert: state => state.alert,
+            isRegistering: state => state.authentication.status
+        })
+    },
     methods: {
+      ...mapActions({
+          clearAlert: 'alert/clear'
+      }),
       handleRegister: function () {
        // this.$validator.validateAll()
 
@@ -69,9 +80,7 @@
           passwordConfirm: this.passwordConfirm
         }
 
-        this.$store.dispatch('authentication/register', data)
-        .then(() => this.$router.push('/'))
-        .catch(err => console.log(err))
+        this.$store.dispatch('authentication/register', data);
       }
     }
   }

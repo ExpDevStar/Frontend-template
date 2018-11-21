@@ -1,13 +1,12 @@
 // import config from 'config';
-//import axios from 'axios';
+import axios from 'axios';
 
 var config = { apiUrl: 'https://ppm-backend-jhouse153.c9users.io' }
 
 export const userService = {
   login,
   logout,
-  register,
-  getAll
+  register
 };
 
 function login(email, password) {
@@ -18,36 +17,30 @@ function login(email, password) {
   };
 
   return fetch(`${config.apiUrl}/auth/login`, requestOptions)
-    .then(handleResponse)
     .then(user => {
       // login successful if there's a jwt token in the response
       if (user.token) {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('user', JSON.stringify(user));
       }
-
       return user;
-    });
+    }).catch(function(error) {
+      return handleError(error)
+    })
 }
 
 function register(email, password, passwordConfirm, firstName, lastName) {
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password, passwordConfirm, firstName, lastName })
-  };
-
-  return fetch(`${config.apiUrl}/auth/register`, requestOptions)
-    .then(handleResponse)
+  return axios.post(
+      `${config.apiUrl}/auth/register`, { email, password, passwordConfirm, firstName, lastName })
     .then(user => {
-      // login successful if there's a jwt token in the response
       if (user.token) {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('user', JSON.stringify(user));
       }
-
       return user;
-    });
+    })
+    .catch(function(error) {
+      return handleError(error)
+    })
 }
 
 function logout() {
@@ -55,30 +48,22 @@ function logout() {
   localStorage.removeItem('user');
 }
 
-function getAll() {
-  const requestOptions = {
-    method: 'GET'
-  };
+// function getAll() {
+//   const requestOptions = {
+//     method: 'GET'
+//   };
 
-  return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
-}
+//   return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+// }
 
-function handleResponse(response) {
-  console.log(response)
+function handleError(error) {
+  if (error.response.status === 401) {
+    logout()
+    location.reload(true)
+  }
+  else {
+    const tempError = (error.response && error.response.data.message) || error.response.statusText;
+    return Promise.reject(tempError)
+  }
 
-  return response.text().then(text => {
-    const data = text && JSON.parse(text);
-    if (!response.ok) {
-      if (response.status === 401) {
-        // auto logout if 401 response returned from api
-        logout();
-        location.reload(true);
-      }
-
-      const error = (data && data.message) || response.statusText;
-      return Promise.reject(error);
-    }
-
-    return data;
-  });
 }

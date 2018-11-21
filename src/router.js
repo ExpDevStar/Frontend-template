@@ -23,13 +23,6 @@ export default new Router({
       path: '/register',
       component: Register
     },
-    // {
-    //   path: '/dashboard',
-    //   component: Dashboard,
-    //   meta: {
-    //     requiresAuth: true
-    //   }
-    // },
     {
       path: '/default',
       name: 'default',

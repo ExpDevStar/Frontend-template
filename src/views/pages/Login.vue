@@ -1,5 +1,12 @@
 <template>
   <v-app id="inspire">
+    <v-toolbar class="white">
+      <v-toolbar-title><router-link to="/"><img src="assets/logo/logo_transparent.png" alt="logo" height="90"></router-link></v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn flat to="/register">Register</v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
     <v-content>
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
@@ -7,7 +14,6 @@
             <v-card class="elevation-12">
               <v-toolbar dark color="primary">
                 <v-toolbar-title>Login
-                  <router-link class="white--text" to="/register">(Register)</router-link>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
@@ -21,6 +27,7 @@
                 </v-alert>
               </v-card-text>
               <v-card-actions>
+                <router-link to="/forgotpw">Forgot Password</router-link>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" @click="handlelogin">Login</v-btn>
               </v-card-actions>
@@ -37,7 +44,7 @@
 export default {
   data () {
       return {
-          email: 'jhetfield@metallica.com',
+          email: 'rukamo@daabox.com',
           password: 'Mock123456',
           submitted: false,
           loginError: null

@@ -6,6 +6,7 @@ import Register from './views/pages/Register.vue'
 import Dashboard from './views/dashboard/Dashboard.vue'
 import DefaultContainer from './containers/DefaultContainer'
 import CapacityEntry from './views/capacityplanning/CapacityEntry'
+import ForgotPW from './views/pages/ForgotPW.vue'
 
 Vue.use(Router);
 
@@ -22,6 +23,10 @@ export default new Router({
     {
       path: '/register',
       component: Register
+    },
+    {
+      path: '/forgotpw',
+      component: ForgotPW
     },
     {
       path: '/default',

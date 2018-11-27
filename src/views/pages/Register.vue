@@ -1,5 +1,12 @@
 <template>
   <v-app id="inspire">
+    <v-toolbar class="white">
+      <v-toolbar-title><router-link to="/"><img src="assets/logo/logo_transparent.png" alt="logo" height="90"></router-link></v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn flat to="/login">Login</v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
     <v-content>
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
@@ -7,7 +14,6 @@
             <v-card class="elevation-12">
               <v-toolbar dark color="primary">
                 <v-toolbar-title>Register
-                  <router-link class="white--text" to="/login">(Login)</router-link>
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
@@ -23,7 +29,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="handleRegister" :disabled="isRegistering.registering == true">Register</v-btn>{{isRegistering}}
+                <v-btn color="primary" @click="handleRegister" :disabled="isRegistering.registering == true">Register</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -40,7 +46,7 @@
       return {
         firstName : "James",
         lastName : "Hetfield",
-        email : "jhetfield@metallica.com",
+        email : "rukamo@daabox.com",
         password : "Mock123456",
         passwordConfirm : "Mock123456",
         dictionary: {
@@ -58,6 +64,7 @@
     },
     mounted () {
       this.$validator.localize('en', this.dictionary)
+      this.$store.dispatch('alert/clear')
     },
     computed: {
         ...mapState({
@@ -70,17 +77,22 @@
           clearAlert: 'alert/clear'
       }),
       handleRegister: function () {
-       // this.$validator.validateAll()
-
-        let data = {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.email,
-          password: this.password,
-          passwordConfirm: this.passwordConfirm
-        }
-
-        this.$store.dispatch('authentication/register', data);
+        this.$store.dispatch('alert/clear')
+        this.$validator.validateAll().then(result => {
+          if (!result) {
+            console.log(result)
+            return false;
+          } else{
+            let data = {
+              firstName: this.firstName,
+              lastName: this.lastName,
+              email: this.email,
+              password: this.password,
+              passwordConfirm: this.passwordConfirm
+            }
+            this.$store.dispatch('authentication/register', data);
+          }
+        });
       }
     }
   }

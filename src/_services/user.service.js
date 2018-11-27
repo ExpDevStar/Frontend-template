@@ -6,7 +6,8 @@ var config = { apiUrl: 'https://ppm-backend-jhouse153.c9users.io' }
 export const userService = {
   login,
   logout,
-  register
+  register,
+  forgotPWRequest
 };
 
 function login(email, password) {
@@ -48,13 +49,16 @@ function logout() {
   localStorage.removeItem('user');
 }
 
-// function getAll() {
-//   const requestOptions = {
-//     method: 'GET'
-//   };
-
-//   return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
-// }
+function forgotPWRequest(email) {
+  return axios.post(
+      `${config.apiUrl}/auth/forgotpw`, { email })
+    .then(response => {
+      return response;
+    })
+    .catch(function(error) {
+      return handleError(error)
+    })
+}
 
 function handleError(error) {
   if (error.response.status === 401) {

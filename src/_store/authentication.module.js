@@ -41,6 +41,19 @@ export const authentication = {
     logout({ commit }) {
       userService.logout();
       commit('logout');
+    },
+    forgotPWRequest({ dispatch, commit }, { email }) {
+      commit('forgotPWRequest');
+
+      userService.forgotPWRequest(email).then(
+        user => {
+          commit('forgotPWRequestSuccess', user);
+        },
+        error => {
+          commit('forgotPWRequestFailure', error)
+          dispatch('alert/error', error, { root: true });
+        }
+      );
     }
   },
   mutations: {
@@ -71,6 +84,19 @@ export const authentication = {
     logout(state) {
       state.status = {};
       state.user = null;
+    },
+    forgotPWRequest(state) {
+      state.status = { requestingForgotPW: true };
+      state.user = null;
+    },
+    forgotPWRequestSuccess(state) {
+      state.status = { requestingForgotPW: false };
+      state.user = null;
+    },
+    forgotPWRequestFailure(state) {
+      state.status = { requestingForgotPW: false };
+      state.user = null;
     }
+
   }
 }

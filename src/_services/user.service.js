@@ -11,29 +11,27 @@ export const userService = {
 };
 
 function login(email, password) {
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
-  };
 
-  return fetch(`${config.apiUrl}/auth/login`, requestOptions)
-    .then(user => {
-      // login successful if there's a jwt token in the response
+  return axios.post(`${config.apiUrl}/auth/login`, { email, password })
+    .then(response => {
+      const user = response.data
+      console.log(user)
       if (user.token) {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('user', JSON.stringify(user));
       }
       return user;
-    }).catch(function(error) {
+    })
+    .catch(function(error) {
       return handleError(error)
     })
+
 }
 
 function register(email, password, passwordConfirm, firstName, lastName) {
-  return axios.post(
-      `${config.apiUrl}/auth/register`, { email, password, passwordConfirm, firstName, lastName })
-    .then(user => {
+  return axios.post(`${config.apiUrl}/auth/register`, { email, password, passwordConfirm, firstName, lastName })
+    .then(response => {
+      const user = response.data
+      console.log(user)
       if (user.token) {
         localStorage.setItem('user', JSON.stringify(user));
       }

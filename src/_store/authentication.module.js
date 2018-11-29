@@ -66,7 +66,7 @@ export const authentication = {
       state.user = user;
     },
     loginFailure(state) {
-      state.status = {};
+      state.status = { loggingIn: false };
       state.user = null;
     },
     registerRequest(state, user) {
@@ -78,7 +78,7 @@ export const authentication = {
       state.user = user;
     },
     registerFailure(state) {
-      state.status = {};
+      state.status = { registering: false };
       state.user = null;
     },
     logout(state) {

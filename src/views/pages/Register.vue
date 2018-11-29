@@ -44,11 +44,11 @@
   export default {
     data(){
       return {
-        firstName : "James",
-        lastName : "Hetfield",
-        email : "rukamo@daabox.com",
-        password : "Mock123456",
-        passwordConfirm : "Mock123456",
+        firstName : "",
+        lastName : "",
+        email : "",
+        password : "",
+        passwordConfirm : "",
         dictionary: {
           custom: {
             password: {

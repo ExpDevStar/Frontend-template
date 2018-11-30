@@ -41,7 +41,7 @@
 export default {
   data () {
     return {
-      email: 'rukamo@daabox.com',
+      email: '',
       submitted: false,
       submitError: null,
       dictionary: {

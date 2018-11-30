@@ -60,9 +60,9 @@ function forgotPWRequest(email) {
     })
 }
 
-function checkTokenRequest(token) {
-  return axios.post(
-      `${config.apiUrl}/auth/validatetoken`, { token })
+function checkTokenRequest(ID) {
+  return axios.get(
+      `${config.apiUrl}/auth/validatetoken`, { ID })
     .then(response => {
       return response;
     })
@@ -84,9 +84,9 @@ function handleError(error) {
 
 }
 
-function resetPWRequest(password, passwordConfirm, token) {
+function resetPWRequest(password, passwordConfirm, ID) {
   return axios.post(
-      `${config.apiUrl}/auth/resetpw`, { password, passwordConfirm, token })
+      `${config.apiUrl}/auth/resetpw`, { password, passwordConfirm, ID })
     .then(response => {
       return response;
     })

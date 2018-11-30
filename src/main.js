@@ -21,16 +21,14 @@ if (token) {
 
 Vue.config.productionTip = false
 
+// redirect to login page if not logged in and trying to access a restricted page
 router.beforeEach((to, from, next) => {
-  // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/login', '/register', '/', '/forgotpw'];
-  const authRequired = !publicPages.includes(to.path);
+  const publicPages = ['login', 'register', 'index', 'forgotpw', 'passwordreset'];
+  const authRequired = !publicPages.includes(to.name);
   const loggedIn = localStorage.getItem('user');
-
   if (authRequired && !loggedIn) {
     return next('/login');
   }
-
   next();
 })
 

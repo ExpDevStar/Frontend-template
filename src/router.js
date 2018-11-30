@@ -7,24 +7,35 @@ import Dashboard from './views/dashboard/Dashboard.vue'
 import DefaultContainer from './containers/DefaultContainer'
 import CapacityEntry from './views/capacityplanning/CapacityEntry'
 import ForgotPW from './views/pages/ForgotPW.vue'
+import ForgotPWReset from './views/pages/ForgotPWReset.vue'
 
 Vue.use(Router);
 
 export default new Router({
   // mode: 'history',
   routes: [{
+      name: 'index',
       path: '/',
       component: Home
     },
     {
+      name: 'login',
       path: '/login',
       component: Login
     },
     {
+      name: 'register',
       path: '/register',
       component: Register
     },
     {
+      name: 'passwordreset',
+      path: '/passwordreset/:token',
+      component: ForgotPWReset,
+      props: true
+    },
+    {
+      name: 'forgotpw',
       path: '/forgotpw',
       component: ForgotPW
     },

@@ -41,6 +41,8 @@
 
 <script>
 
+import { mapState, mapActions } from 'vuex'
+
 export default {
   data () {
       return {
@@ -51,22 +53,35 @@ export default {
       }
   },
   computed: {
-      loggingIn () {
-        return this.$store.state.authentication.status.loggingIn;
-      }
+    ...mapState({
+        alert: state => state.alert,
+        loggingIn: state => state.authentication.status
+    })
   },
   created () {
       // reset login status
      // this.$store.dispatch('authentication/logout');
   },
   methods: {
-    handlelogin () {
-        this.submitted = true;
-        const { email, password } = this;
-        const { dispatch } = this.$store;
-        if (email && password) {
-            dispatch('authentication/login', { email, password });
+    ...mapActions({
+        clearAlert: 'alert/clear'
+    }),
+    handlelogin: function () {
+      this.$store.dispatch('alert/clear')
+      this.$validator.validateAll().then(result => {
+        if (!result) {
+          console.log(result)
+          return false;
+        } else {
+          this.submitted = true;
+          let data = {
+            email: this.email,
+            password: this.password,
+          }
+          const { dispatch } = this.$store;
+          dispatch('authentication/login', data);
         }
+      });
     }
   }
 }

@@ -7,7 +7,9 @@ export const userService = {
   login,
   logout,
   register,
-  forgotPWRequest
+  forgotPWRequest,
+  checkTokenRequest,
+  resetPWRequest
 };
 
 function login(email, password) {
@@ -58,6 +60,18 @@ function forgotPWRequest(email) {
     })
 }
 
+function checkTokenRequest(token) {
+  return axios.post(
+      `${config.apiUrl}/auth/validatetoken`, { token })
+    .then(response => {
+      return response;
+    })
+    .catch(function(error) {
+      return handleError(error)
+    })
+}
+
+
 function handleError(error) {
   if (error.response.status === 401) {
     logout()
@@ -68,4 +82,15 @@ function handleError(error) {
     return Promise.reject(tempError)
   }
 
+}
+
+function resetPWRequest(password, passwordConfirm, token) {
+  return axios.post(
+      `${config.apiUrl}/auth/resetpw`, { password, passwordConfirm, token })
+    .then(response => {
+      return response;
+    })
+    .catch(function(error) {
+      return handleError(error)
+    })
 }

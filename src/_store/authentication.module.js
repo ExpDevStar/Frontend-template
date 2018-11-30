@@ -39,19 +39,44 @@ export const authentication = {
         );
     },
     logout({ commit }) {
-      userService.logout();
-      commit('logout');
+      userService.logout()
+      commit('logout')
     },
     forgotPWRequest({ dispatch, commit }, { email }) {
-      commit('forgotPWRequest');
+      commit('forgotPWRequest')
 
       userService.forgotPWRequest(email).then(
         user => {
-          commit('forgotPWRequestSuccess', user);
+          commit('forgotPWRequestSuccess', user)
         },
         error => {
           commit('forgotPWRequestFailure', error)
-          dispatch('alert/error', error, { root: true });
+          dispatch('alert/error', error, { root: true })
+        }
+      );
+    },
+    resetPWRequest({ dispatch, commit }, { password, passwordConfirm, token }) {
+      commit('resetPWRequest')
+
+      userService.resetPWRequest(password, passwordConfirm, token).then(
+        user => {
+          commit('resetPWRequestSuccess', user)
+        },
+        error => {
+          commit('resetPWRequestFailure', error)
+          dispatch('alert/error', error, { root: true })
+        }
+      );
+    },
+    checkTokenRequest({ dispatch, commit }, { token }) {
+      commit('checkTokenRequest')
+      userService.checkTokenRequest(token).then(
+        user => {
+          commit('checkTokenRequestSuccess', user)
+        },
+        error => {
+          commit('checkTokenRequestFailure', error)
+          dispatch('alert/error', error, { root: true })
         }
       );
     }
@@ -95,6 +120,30 @@ export const authentication = {
     },
     forgotPWRequestFailure(state) {
       state.status = { requestingForgotPW: false };
+      state.user = null;
+    },
+    resetPWRequest(state) {
+      state.status = { requestingPWReset: true };
+      state.user = null;
+    },
+    resetPWRequestSuccess(state) {
+      state.status = { requestingPWReset: false };
+      state.user = null;
+    },
+    resetPWRequestFailure(state) {
+      state.status = { requestingPWReset: false };
+      state.user = null;
+    },
+    checkTokenRequest(state) {
+      state.status = { checkTokenRequest: true };
+      state.user = null;
+    },
+    checkTokenRequestSuccess(state) {
+      state.status = { checkTokenRequest: false };
+      state.user = null;
+    },
+    checkTokenRequestFailure(state) {
+      state.status = { checkTokenRequest: false };
       state.user = null;
     }
 

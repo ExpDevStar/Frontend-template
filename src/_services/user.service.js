@@ -17,13 +17,14 @@ function login(email, password) {
   return axios.post(`${config.apiUrl}/auth/login`, { email, password })
     .then(response => {
       const user = response.data
-      console.log(user)
+      console.log("response.data")
+      console.log(response.data)
       if (user.token) {
         localStorage.setItem('user', JSON.stringify(user));
       }
       return user;
-    })
-    .catch(function(error) {
+    }).catch(function(error) {
+      console.log("error")
       return handleError(error)
     })
 
@@ -38,8 +39,7 @@ function register(email, password, passwordConfirm, firstName, lastName) {
         localStorage.setItem('user', JSON.stringify(user));
       }
       return user;
-    })
-    .catch(function(error) {
+    }).catch(function(error) {
       return handleError(error)
     })
 }
@@ -65,8 +65,7 @@ function checkTokenRequest(ID) {
       `${config.apiUrl}/auth/validatetoken`, { ID })
     .then(response => {
       return response;
-    })
-    .catch(function(error) {
+    }).catch(function(error) {
       return handleError(error)
     })
 }
@@ -78,8 +77,13 @@ function handleError(error) {
     location.reload(true)
   }
   else {
-    const tempError = (error.response && error.response.data.message) || error.response.statusText;
-    return Promise.reject(tempError)
+    if (error.response.status >= 400 && error.response.status <= 499) {
+      var errorsArr = error.response.data.Errors
+      Promise.reject(errorsArr)
+    }
+    else {
+      return Promise.reject("server_error")
+    }
   }
 
 }

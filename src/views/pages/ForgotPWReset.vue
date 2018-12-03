@@ -18,7 +18,7 @@
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
-                <v-form>
+                <v-form>3wsdF
                   <v-text-field v-validate="'required'" v-model="password" :error-messages="errors.collect('password')" prepend-icon="lock" required name="password" label="Password" type="password"></v-text-field>
                   <v-text-field v-validate="'required'" v-model="passwordConfirm" :error-messages="errors.collect('passwordConfirm')" prepend-icon="lock" required name="password-confirm" label="Confirm" type="password"></v-text-field>
                 </v-form>

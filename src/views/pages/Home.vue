@@ -179,7 +179,10 @@
 </template>
 
 <script>
+
 export default {
+  components: {
+  },
   i18n: { // `i18n` option, setup locale info for component
     messages: {
       en: {

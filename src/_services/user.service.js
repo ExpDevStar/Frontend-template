@@ -1,7 +1,4 @@
-// import config from 'config';
-import axios from 'axios';
-
-var config = { apiUrl: 'https://ppm-backend-jhouse153.c9users.io' }
+import Api from '../api.js'
 
 export const userService = {
   login,
@@ -14,24 +11,20 @@ export const userService = {
 
 function login(email, password) {
 
-  return axios.post(`${config.apiUrl}/auth/login`, { email, password })
+  return Api().post(`/auth/login`, { email, password })
     .then(response => {
       const user = response.data
-      console.log("response.data")
-      console.log(response.data)
       if (user.token) {
         localStorage.setItem('user', JSON.stringify(user));
       }
       return user;
-    }).catch(function(error) {
-      console.log("error")
-      return handleError(error)
+    }).catch(error => {
+      return Promise.reject(error)
     })
-
 }
 
 function register(email, password, passwordConfirm, firstName, lastName) {
-  return axios.post(`${config.apiUrl}/auth/register`, { email, password, passwordConfirm, firstName, lastName })
+  return Api().post(`/auth/register`, { email, password, passwordConfirm, firstName, lastName })
     .then(response => {
       const user = response.data
       console.log(user)
@@ -40,7 +33,7 @@ function register(email, password, passwordConfirm, firstName, lastName) {
       }
       return user;
     }).catch(function(error) {
-      return handleError(error)
+      return Promise.reject(error)
     })
 }
 
@@ -50,51 +43,31 @@ function logout() {
 }
 
 function forgotPWRequest(email) {
-  return axios.post(
-      `${config.apiUrl}/auth/forgotpw`, { email })
+  return Api().post(`/auth/forgotpw`, { email })
     .then(response => {
       return response;
     })
     .catch(function(error) {
-      return handleError(error)
+      return Promise.reject(error)
     })
 }
 
 function checkTokenRequest(ID) {
-  return axios.get(
-      `${config.apiUrl}/auth/validatetoken`, { ID })
+  return Api().get(`/auth/validatetoken`, { ID })
     .then(response => {
       return response;
     }).catch(function(error) {
-      return handleError(error)
+      return Promise.reject(error)
     })
 }
 
-
-function handleError(error) {
-  if (error.response.status === 401) {
-    logout()
-    location.reload(true)
-  }
-  else {
-    if (error.response.status >= 400 && error.response.status <= 499) {
-      var errorsArr = error.response.data.Errors
-      Promise.reject(errorsArr)
-    }
-    else {
-      return Promise.reject("server_error")
-    }
-  }
-
-}
-
 function resetPWRequest(password, passwordConfirm, ID) {
-  return axios.post(
-      `${config.apiUrl}/auth/resetpw`, { password, passwordConfirm, ID })
+  return Api().post(
+      `/auth/resetpw`, { password, passwordConfirm, ID })
     .then(response => {
       return response;
     })
     .catch(function(error) {
-      return handleError(error)
+      return Promise.reject(error)
     })
 }

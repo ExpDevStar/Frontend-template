@@ -4,7 +4,7 @@
       <v-toolbar-title><router-link to="/"><img src="assets/logo/logo_transparent.png" alt="logo" height="90"></router-link></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat to="/login">Login</v-btn>
+        <v-btn flat to="/login">{{ $t("login") }}</v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-content>
@@ -13,23 +13,78 @@
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
               <v-toolbar dark color="primary">
-                <v-toolbar-title>Register
+                <v-toolbar-title>{{ $t("register") }}
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field  :error-messages="errors.collect('firstName')" v-model="firstName" prepend-icon="person" required name="firstName" label="First Name" type="text" maxlength="50"></v-text-field>
-                  <v-text-field v-validate="'required|alpha_spaces'" data-vv-name="lastName" :error-messages="errors.collect('lastName')" v-model="lastName" required prepend-icon="person" name="lastName" label="Last Name" type="text" maxlength="50"></v-text-field>
-                  <v-text-field v-validate="'required|email'" v-model="email" :error-messages="errors.collect('email')" prepend-icon="person" required name="email" label="Email" type="email" maxlength="50"></v-text-field>
-                  <v-text-field v-validate="{required:true, regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,100}$/ }" v-model="password" :error-messages="errors.collect('password')" id="password" prepend-icon="lock" required name="password" label="Password" type="password"></v-text-field>
-                  <v-text-field v-validate="{is: password}" v-model="passwordConfirm" :error-messages="errors.collect('password-confirm')" id="passwordConfirm" required prepend-icon="lock" name="password-confirm" label="Password Confirm" type="password"></v-text-field>
+
+                  <v-text-field
+                    v-validate="'required|alpha_spaces'"
+                    :error-messages="errors.collect('firstName')"
+                    v-model="firstName"
+                    prepend-icon="person"
+                    required
+                    name="firstName"
+                    v-bind:label="$t('firstname')"
+                    type="text"
+                    maxlength="50">
+                  </v-text-field>
+
+                  <v-text-field
+                    v-validate="'required|alpha_spaces'"
+                    data-vv-name="lastName"
+                    :error-messages="errors.collect('lastName')"
+                    v-model="lastName"
+                    required prepend-icon="person"
+                    name="lastName"
+                    v-bind:label="$t('lastname')"
+                    type="text"
+                    maxlength="50">
+                  </v-text-field>
+
+                  <v-text-field
+                    v-validate="'required|email'"
+                    v-model="email"
+                    :error-messages="errors.collect('email')"
+                    prepend-icon="person"
+                    required
+                    name="email"
+                    v-bind:label="$t('email')"
+                    type="email"
+                    maxlength="50">
+                  </v-text-field>
+
+                  <v-text-field
+                    v-validate="{required:true, regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,100}$/ }"
+                    v-model="password"
+                    :error-messages="errors.collect('password')"
+                    id="password"
+                    prepend-icon="lock"
+                    required name="password"
+                    v-bind:label="$t('password')"
+                    type="password">
+                  </v-text-field>
+
+                  <v-text-field
+                    v-validate="{is: password}"
+                    v-model="passwordConfirm"
+                    :error-messages="errors.collect('password-confirm')"
+                    id="passwordConfirm"
+                    required
+                    prepend-icon="lock"
+                    name="password-confirm"
+                    v-bind:label="$t('passwordconfirm')"
+                    type="password">
+                  </v-text-field>
+
                 </v-form>
                 <v-alert dismissible :value="alert.message" icon="new_releases">{{alert.message}}</v-alert>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="handleRegister" :disabled="isRegistering.registering == true">Register</v-btn>
+                <v-btn color="primary" @click="handleRegister" :disabled="isRegistering.registering == true">{{ $t("register") }}</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -94,6 +149,20 @@
           }
         });
       }
+    },
+    i18n: { // `i18n` option, setup locale info for component
+      messages: {
+        en: {
+          login: 'Login',
+          register: 'Register',
+          firstname: 'First Name',
+          lastname: 'Last Name',
+          email: 'Email',
+          password: 'Password',
+          passwordconfirm: 'Password Confirm'
+        }
+      }
     }
+
   }
 </script>

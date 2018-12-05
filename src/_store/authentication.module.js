@@ -18,8 +18,13 @@ export const authentication = {
             router.push('/dashboard');
           },
           error => {
+            let errStr = "";
+            error.response.data.errors.forEach(function(entry) {
+              errStr += entry.title;
+              console.log(entry);
+            });
             commit('loginFailure', error)
-            dispatch('alert/error', error, { root: true });
+            dispatch('alert/error', errStr, { root: true });
           }
         );
     },
@@ -27,12 +32,12 @@ export const authentication = {
       commit('registerRequest', { email });
 
       userService.register(email, password, passwordConfirm, firstName, lastName)
-        .then(
-          user => {
+        .then(user => {
             commit('registerSuccess', user);
             router.push('/dashboard');
           },
           error => {
+
             commit('registerFailure', error)
             dispatch('alert/error', error, { root: true });
           }

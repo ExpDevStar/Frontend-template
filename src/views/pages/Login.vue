@@ -4,7 +4,7 @@
       <v-toolbar-title><router-link to="/"><img src="assets/logo/logo_transparent.png" alt="logo" height="90"></router-link></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat to="/register">Register</v-btn>
+        <v-btn flat to="/register">{{ $t("register") }}</v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-content>
@@ -19,17 +19,34 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field v-model="email" prepend-icon="person" name="login" label="Login" type="text"></v-text-field>
-                  <v-text-field v-model="password" id="password" prepend-icon="lock" name="password" label="Password" type="password"></v-text-field>
+                  <v-text-field
+                  v-model="email"
+                  v-validate="'required|email'"
+                  :error-messages="errors.collect('login')"
+                  prepend-icon="person"
+                  name="login"
+                  v-bind:label="$t('login')"
+                  type="text">
+                  </v-text-field>
+
+                  <v-text-field
+                  v-model="password"
+                  v-validate="'required'"
+                  id="password"
+                  prepend-icon="lock"
+                  :error-messages="errors.collect('password')"
+                  name="password"
+                  v-bind:label="$t('password')"
+                  type="password">
+                  </v-text-field>
+
                 </v-form>
-                <v-alert v-if="loggingIn" v-model="loginError" dismissible type="error">
-                  This is a error alert that is closable.
-                </v-alert>
+                <v-alert dismissible :value="alert.message" icon="new_releases">{{alert.message}}</v-alert>
               </v-card-text>
               <v-card-actions>
-                <router-link to="/forgotpw">Forgot Password</router-link>
+                <router-link to="/forgotpw">{{ $t("forgotpassword") }}</router-link>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="handlelogin">Login</v-btn>
+                <v-btn color="primary" @click="handlelogin">{{ $t("login") }}</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -47,7 +64,7 @@ export default {
   data () {
       return {
           email: 'rukamo@daabox.com',
-          password: '',
+          password: 'gfhdgfhdtrhftgh453M',
           submitted: false,
           loginError: null
       }
@@ -82,6 +99,16 @@ export default {
           dispatch('authentication/login', data);
         }
       });
+    }
+  },
+  i18n: { // `i18n` option, setup locale info for component
+    messages: {
+      en: {
+        login: 'Login',
+        register: 'Register',
+        password: 'Password',
+        forgotpassword: 'Forgot password'
+      }
     }
   }
 }

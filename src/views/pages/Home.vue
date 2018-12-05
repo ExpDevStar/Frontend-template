@@ -4,8 +4,8 @@
       <v-toolbar-title><router-link to="/"><img src="assets/logo/logo_transparent.png" alt="logo" height="90"></router-link></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat to="/login">Login</v-btn>
-        <v-btn flat to="/register">Register</v-btn>
+        <v-btn flat to="/login">{{ $t("login") }}</v-btn>
+        <v-btn flat to="/register">{{ $t("register") }}</v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-content>
@@ -180,6 +180,18 @@
 
 <script>
 export default {
+  i18n: { // `i18n` option, setup locale info for component
+    messages: {
+      en: {
+        login: 'Login',
+        register: 'Register'
+      },
+      sp: {
+        login: 'Login',
+        register: 'Registro '
+      }
+    }
+  }
 }
 </script>
 

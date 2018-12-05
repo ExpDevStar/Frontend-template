@@ -32,9 +32,25 @@
                   </v-text-field>
                 </v-form>
                 <v-alert dismissible :value="alert.message" icon="new_releases">{{alert.message}}</v-alert>
+                <v-alert
+                  :value="requestingForgotPW.forgotPWSuccess"
+                  type="success"
+                  dismissible
+                  v-if="requestingForgotPW.forgotPWSuccess"
+                  icon="new_releases">
+                  {{ $t("emailSent") }}
+                </v-alert>
+
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
+                  <div id="loading" v-if="requestingForgotPW.requestingForgotPW">
+                    <trinity-rings-spinner
+                      :animation-duration="1500"
+                      :size="40"
+                      color="#76FF03"
+                    />
+                  </div>
                 <v-btn color="primary" @click="handleSubmit">{{ $t("reset") }}</v-btn>
               </v-card-actions>
             </v-card>
@@ -69,16 +85,17 @@ export default {
   mounted () {
     this.$validator.localize('en', this.dictionary)
     this.$store.dispatch('alert/clear')
+    this.$store.dispatch('authentication/clear')
   },
   computed: {
     ...mapState({
         alert: state => state.alert,
-        isRegistering: state => state.authentication.status
+        requestingForgotPW: state => state.authentication.status
     })
   },
   methods: {
   ...mapActions({
-      clearAlert: 'alert/clear'
+      clearAlert: 'alert/clear',
   }),
   handleSubmit () {
     this.$store.dispatch('alert/clear')
@@ -103,7 +120,8 @@ export default {
         password: 'Password',
         forgotpassword: 'Forgot password',
         reset: 'Reset',
-        email: 'Email'
+        email: 'Email',
+        emailSent: 'An email has been sent with instructions on how to reset your password.'
       }
     }
   }

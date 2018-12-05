@@ -12,7 +12,7 @@ export const alert = {
       commit('error', message);
     },
     clear({ commit }, message) {
-      commit('success', message);
+      commit('clear', message);
     }
   },
   mutations: {

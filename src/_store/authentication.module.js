@@ -8,6 +8,9 @@ export const authentication = {
   namespaced: true,
   state: initialState,
   actions: {
+    clear({ commit }, message) {
+      commit('clear', message);
+    },
     login({ dispatch, commit }, { email, password }) {
       commit('loginRequest', { email });
 
@@ -19,10 +22,15 @@ export const authentication = {
           },
           error => {
             let errStr = "";
-            error.response.data.errors.forEach(function(entry) {
-              errStr += entry.title;
-              console.log(entry);
-            });
+            console.log(typeof error.response.data)
+            if (error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
+              error.response.data.errors.forEach(function(entry) {
+                errStr += entry.title;
+              });
+            }
+            else {
+              errStr = "An unknown error has occurred"
+            }
             commit('loginFailure', error)
             dispatch('alert/error', errStr, { root: true });
           }
@@ -37,9 +45,18 @@ export const authentication = {
             router.push('/dashboard');
           },
           error => {
-
+            let errStr = "";
+            console.log(typeof error.response.data)
+            if (error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
+              error.response.data.errors.forEach(function(entry) {
+                errStr += entry.title;
+              });
+            }
+            else {
+              errStr = "An unknown error has occurred"
+            }
             commit('registerFailure', error)
-            dispatch('alert/error', error, { root: true });
+            dispatch('alert/error', errStr, { root: true });
           }
         );
     },
@@ -87,12 +104,16 @@ export const authentication = {
     }
   },
   mutations: {
+    clear(state) {
+      state.status = {};
+      state.user = null;
+    },
     loginRequest(state, user) {
       state.status = { loggingIn: true };
       state.user = user;
     },
     loginSuccess(state, user) {
-      state.status = { loggedIn: true };
+      state.status = { loggedIn: true, loggingIn: false };
       state.user = user;
     },
     loginFailure(state) {
@@ -116,15 +137,15 @@ export const authentication = {
       state.user = null;
     },
     forgotPWRequest(state) {
-      state.status = { requestingForgotPW: true };
+      state.status = { requestingForgotPW: true, forgotPWSuccess: false };
       state.user = null;
     },
     forgotPWRequestSuccess(state) {
-      state.status = { requestingForgotPW: false };
+      state.status = { requestingForgotPW: false, forgotPWSuccess: true };
       state.user = null;
     },
     forgotPWRequestFailure(state) {
-      state.status = { requestingForgotPW: false };
+      state.status = { requestingForgotPW: false, forgotPWSuccess: false };
       state.user = null;
     },
     resetPWRequest(state) {

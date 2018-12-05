@@ -20,24 +20,24 @@
               <v-card-text>
                 <v-form>
                   <v-text-field
-                  v-model="email"
-                  v-validate="'required|email'"
-                  :error-messages="errors.collect('login')"
-                  prepend-icon="person"
-                  name="login"
-                  v-bind:label="$t('login')"
-                  type="text">
+                    v-model="email"
+                    v-validate="'required|email'"
+                    :error-messages="errors.collect('login')"
+                    prepend-icon="person"
+                    name="login"
+                    v-bind:label="$t('login')"
+                    type="text">
                   </v-text-field>
 
                   <v-text-field
-                  v-model="password"
-                  v-validate="'required'"
-                  id="password"
-                  prepend-icon="lock"
-                  :error-messages="errors.collect('password')"
-                  name="password"
-                  v-bind:label="$t('password')"
-                  type="password">
+                    v-model="password"
+                    v-validate="'required'"
+                    id="password"
+                    prepend-icon="lock"
+                    :error-messages="errors.collect('password')"
+                    name="password"
+                    v-bind:label="$t('password')"
+                    type="password">
                   </v-text-field>
 
                 </v-form>
@@ -46,7 +46,14 @@
               <v-card-actions>
                 <router-link to="/forgotpw">{{ $t("forgotpassword") }}</router-link>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="handlelogin">{{ $t("login") }}</v-btn>
+                <div id="loading" v-if="loggingIn.loggingIn == true">
+                  <trinity-rings-spinner
+                    :animation-duration="1500"
+                    :size="40"
+                    color="#76FF03"
+                  />
+                </div>
+                <v-btn color="primary" @click="handlelogin" :disabled="loggingIn.loggingIn == true">{{ $t("login") }}</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -61,23 +68,23 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
+
   data () {
-      return {
-          email: 'rukamo@daabox.com',
-          password: 'gfhdgfhdtrhftgh453M',
-          submitted: false,
-          loginError: null
-      }
+    return {
+      email: 'rukamo@daabox.com',
+      password: 'gfhdgfhdtrhftgh453M',
+      submitted: false,
+      loginError: null
+    }
   },
   computed: {
     ...mapState({
-        alert: state => state.alert,
-        loggingIn: state => state.authentication.status
+      alert: state => state.alert,
+      loggingIn: state => state.authentication.status
     })
   },
   created () {
-      // reset login status
-     // this.$store.dispatch('authentication/logout');
+    this.$store.dispatch('alert/clear')
   },
   methods: {
     ...mapActions({

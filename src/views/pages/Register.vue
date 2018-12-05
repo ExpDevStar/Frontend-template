@@ -84,6 +84,13 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
+                <div id="loading" v-if="isRegistering.registering == true">
+                  <trinity-rings-spinner
+                    :animation-duration="1500"
+                    :size="40"
+                    color="#76FF03"
+                  />
+                </div>
                 <v-btn color="primary" @click="handleRegister" :disabled="isRegistering.registering == true">{{ $t("register") }}</v-btn>
               </v-card-actions>
             </v-card>
@@ -96,7 +103,11 @@
 
 <script>
   import { mapState, mapActions } from 'vuex'
+  import { TrinityRingsSpinner } from 'epic-spinners'
   export default {
+    components: {
+      TrinityRingsSpinner
+    },
     data(){
       return {
         firstName : "",
@@ -166,3 +177,8 @@
 
   }
 </script>
+
+<style>
+
+
+</style>

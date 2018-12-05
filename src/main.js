@@ -11,8 +11,11 @@ import VeeValidate from 'vee-validate';
 import VueI18n from 'vue-i18n';
 import validationMessagesEn from 'vee-validate/dist/locale/en';
 import validationMessagesEs from 'vee-validate/dist/locale/es';
+import { TrinityRingsSpinner } from 'epic-spinners'
 
 Vue.use(VueI18n);
+
+Vue.component('TrinityRingsSpinner', TrinityRingsSpinner)
 
 const i18n = new VueI18n({
   locale: 'en' // set locale

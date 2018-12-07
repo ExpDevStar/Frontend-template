@@ -146,7 +146,7 @@
                       <v-icon class="primary--text">place</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                      <v-list-tile-title>Tempe, US</v-list-tile-title>
+                      <v-list-tile-title>Tempe, AZ US</v-list-tile-title>
                     </v-list-tile-content>
                   </v-list-tile>
                   <v-list-tile>

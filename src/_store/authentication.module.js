@@ -21,15 +21,12 @@ export const authentication = {
             router.push('/dashboard');
           },
           error => {
-            let errStr = "";
-            console.log(typeof error.response.data)
+            let errStr = "An unknown error has occurred";
             if (error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
+              errStr = "";
               error.response.data.errors.forEach(function(entry) {
                 errStr += entry.title;
               });
-            }
-            else {
-              errStr = "An unknown error has occurred"
             }
             commit('loginFailure', error)
             dispatch('alert/error', errStr, { root: true });
@@ -45,15 +42,12 @@ export const authentication = {
             router.push('/dashboard');
           },
           error => {
-            let errStr = "";
-            console.log(typeof error.response.data)
+            let errStr = "An unknown error has occurred";
             if (error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
+              errStr = "";
               error.response.data.errors.forEach(function(entry) {
                 errStr += entry.title;
               });
-            }
-            else {
-              errStr = "An unknown error has occurred"
             }
             commit('registerFailure', error)
             dispatch('alert/error', errStr, { root: true });
@@ -72,8 +66,15 @@ export const authentication = {
           commit('forgotPWRequestSuccess', user)
         },
         error => {
-          commit('forgotPWRequestFailure', error)
-          dispatch('alert/error', error, { root: true })
+          let errStr = "An unknown error has occurred";
+          if (error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
+            errStr = "";
+            error.response.data.errors.forEach(function(entry) {
+              errStr += entry.title;
+            });
+          }
+          commit('forgotPWRequestFailure', errStr)
+          dispatch('alert/error', errStr, { root: true })
         }
       );
     },
@@ -85,8 +86,15 @@ export const authentication = {
           commit('resetPWRequestSuccess', user)
         },
         error => {
-          commit('resetPWRequestFailure', error)
-          dispatch('alert/error', error, { root: true })
+          let errStr = "An unknown error has occurred";
+          if (error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
+            errStr = "";
+            error.response.data.errors.forEach(function(entry) {
+              errStr += entry.title;
+            });
+          }
+          commit('resetPWRequestFailure', errStr)
+          dispatch('alert/error', errStr, { root: true })
         }
       );
     },
@@ -97,8 +105,15 @@ export const authentication = {
           commit('checkTokenRequestSuccess', user)
         },
         error => {
-          commit('checkTokenRequestFailure', error)
-          dispatch('alert/error', error, { root: true })
+          let errStr = "An unknown error has occurred";
+          if (error.response.hasOwnProperty('data') && error.response.data.hasOwnProperty('errors')) {
+            errStr = "";
+            error.response.data.errors.forEach(function(entry) {
+              errStr += entry.title;
+            });
+          }
+          commit('checkTokenRequestFailure', errStr)
+          dispatch('alert/error', errStr, { root: true })
         }
       );
     }

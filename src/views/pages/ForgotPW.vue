@@ -51,7 +51,7 @@
                       color="#76FF03"
                     />
                   </div>
-                <v-btn color="primary" @click="handleSubmit">{{ $t("reset") }}</v-btn>
+                <v-btn color="primary" @click="handleSubmit"  :disabled="requestingForgotPW.requestingForgotPW">{{ $t("reset") }}</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>

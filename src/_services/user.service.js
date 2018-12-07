@@ -53,7 +53,7 @@ function forgotPWRequest(email) {
 }
 
 function checkTokenRequest(ID) {
-  return Api().get(`/auth/validatetoken`, { ID })
+  return Api().get(`/auth/validatetoken?ID=` + ID)
     .then(response => {
       return response;
     }).catch(function(error) {

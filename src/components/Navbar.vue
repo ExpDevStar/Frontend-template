@@ -31,13 +31,20 @@
       <v-toolbar-side-icon @click.native="drawer = !drawer"></v-toolbar-side-icon>
       <span class="title ml-3 mr-5">PPM</span>
       <v-spacer></v-spacer>
-      <v-menu bottom left slide-y>
-        <v-btn slot="activator" dark icon>
-          <v-icon>more_vert</v-icon>
-        </v-btn>
+      <v-menu offset-y>
+        <v-card
+          slot="activator"
+          class="portrait"
+          :img="this.avatar"
+          height="50"
+          width="50"
+        ></v-card>
         <v-list>
-          <v-list-tile v-for="(item, i) in moreItems" :key="i" @click="logout" >
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          <v-list-tile
+            v-for="(item, index) in profileItems"
+            :key="index"
+          >
+            <v-list-tile-title @click="logout">{{ item.title }}</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>
@@ -50,8 +57,10 @@
 
 export default {
   data: () => ({
+      avatar: "",
       drawer: null,
-      moreItems: [
+      profileItems: [
+        {title: 'Settings'},
         {title: 'Logout'}
       ],
       items: [
@@ -74,10 +83,18 @@ export default {
     props: {
       source: String
     },
+    mounted () {
+      this.getAvatar()
+    },
     computed : {
       isLoggedIn : function(){ return this.$store.getters.isLoggedIn}
     },
     methods: {
+      getAvatar: function (){
+        const tempUser = JSON.parse(localStorage.user)
+        console.log(tempUser.avatar)
+        this.avatar = tempUser.avatar
+      },
       logout: function () {
         this.$store.dispatch('authentication/logout')
         .then(() => {

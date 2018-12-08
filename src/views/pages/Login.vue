@@ -72,7 +72,7 @@ export default {
   data () {
     return {
       email: 'rukamo@daabox.com',
-      password: 'gfhdgfhdtrhftgh453M',
+      password: 'Mock123456',
       submitted: false,
       loginError: null
     }

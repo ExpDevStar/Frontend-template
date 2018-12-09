@@ -43,8 +43,9 @@
           <v-list-tile
             v-for="(item, index) in profileItems"
             :key="index"
+            :to="item.href"
           >
-            <v-list-tile-title @click="logout">{{ item.title }}</v-list-tile-title>
+            <v-list-tile-title >{{ item.title }}</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>
@@ -60,8 +61,8 @@ export default {
       avatar: "",
       drawer: null,
       profileItems: [
-        {title: 'Settings'},
-        {title: 'Logout'}
+        {title: 'Settings', href: "settings"},
+        {title: 'Logout', href: "logout"}
       ],
       items: [
         { icon: 'fas fa-home', text: 'Home', href : '/dashboard' },
@@ -94,12 +95,6 @@ export default {
         const tempUser = JSON.parse(localStorage.user)
         console.log(tempUser.avatar)
         this.avatar = tempUser.avatar
-      },
-      logout: function () {
-        this.$store.dispatch('authentication/logout')
-        .then(() => {
-          this.$router.push('/login')
-        })
       }
     },
   }

@@ -21,6 +21,7 @@
                 <v-form>
 
                   <v-text-field
+                    browser-autocomplete="off"
                     v-validate="'required'"
                     v-model="password"
                     :error-messages="errors.collect('password')"
@@ -32,6 +33,7 @@
                   </v-text-field>
 
                   <v-text-field
+                    browser-autocomplete="off"
                     v-validate="'required'"
                     v-model="passwordConfirm"
                     :error-messages="errors.collect('passwordConfirm')"

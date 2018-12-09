@@ -21,6 +21,7 @@
                 <v-form>
 
                   <v-text-field
+                    browser-autocomplete="off"
                     v-validate="'required|alpha_spaces'"
                     :error-messages="errors.collect('firstName')"
                     v-model="firstName"
@@ -33,6 +34,7 @@
                   </v-text-field>
 
                   <v-text-field
+                    browser-autocomplete="off"
                     v-validate="'required|alpha_spaces'"
                     data-vv-name="lastName"
                     :error-messages="errors.collect('lastName')"
@@ -45,6 +47,7 @@
                   </v-text-field>
 
                   <v-text-field
+                    browser-autocomplete="off"
                     v-validate="'required|email'"
                     v-model="email"
                     :error-messages="errors.collect('email')"
@@ -57,6 +60,7 @@
                   </v-text-field>
 
                   <v-text-field
+                    browser-autocomplete="off"
                     v-validate="{required:true, regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,100}$/ }"
                     v-model="password"
                     :error-messages="errors.collect('password')"
@@ -68,6 +72,7 @@
                   </v-text-field>
 
                   <v-text-field
+                    browser-autocomplete="off"
                     v-validate="{is: password}"
                     v-model="passwordConfirm"
                     :error-messages="errors.collect('password-confirm')"

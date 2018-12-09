@@ -20,6 +20,7 @@
               <v-card-text>
                 <v-form>
                   <v-text-field
+                    browser-autocomplete="off"
                     v-model="email"
                     v-validate="'required|email'"
                     :error-messages="errors.collect('login')"

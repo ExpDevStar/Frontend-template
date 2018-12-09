@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/pages/Home.vue'
 import Login from './views/pages/Login.vue'
+import Logout from './views/user/Logout.vue'
 import Register from './views/pages/Register.vue'
 import Dashboard from './views/dashboard/Dashboard.vue'
 import DefaultContainer from './containers/DefaultContainer'
@@ -47,6 +48,14 @@ export default new Router({
           path: '/dashboard',
           name: 'dashboard',
           component: Dashboard,
+          meta: {
+            requiresAuth: true
+          },
+        },
+        {
+          path: '/logout',
+          name: 'logout',
+          component: Logout,
           meta: {
             requiresAuth: true
           },

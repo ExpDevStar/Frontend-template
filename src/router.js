@@ -61,6 +61,14 @@ export default new Router({
           },
         },
         {
+          path: '/settings',
+          name: 'settings',
+          component: Logout,
+          meta: {
+            requiresAuth: true
+          },
+        },
+        {
           path: '/capacityplanning',
           name: 'capacityplanning',
           component: CapacityEntry,

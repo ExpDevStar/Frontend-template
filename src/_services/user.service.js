@@ -23,8 +23,8 @@ function login(email, password) {
     })
 }
 
-function register(email, password, passwordConfirm, firstName, lastName) {
-  return Api().post(`/auth/register`, { email, password, passwordConfirm, firstName, lastName })
+function register(email, password, passwordConfirm, firstName, lastName, organizationName) {
+  return Api().post(`/auth/register`, { email, password, passwordConfirm, firstName, lastName, organizationName })
     .then(response => {
       const user = response.data
       console.log(user)

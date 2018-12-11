@@ -22,6 +22,19 @@
 
                   <v-text-field
                     browser-autocomplete="off"
+                    v-validate="'required'"
+                    :error-messages="errors.collect('organizationName')"
+                    v-model="organizationName"
+                    prepend-icon="person"
+                    required
+                    name="organizationName"
+                    v-bind:label="$t('organizationName')"
+                    type="text"
+                    maxlength="50">
+                  </v-text-field>
+
+                  <v-text-field
+                    browser-autocomplete="off"
                     v-validate="'required|alpha_spaces'"
                     :error-messages="errors.collect('firstName')"
                     v-model="firstName"
@@ -115,6 +128,7 @@
     },
     data(){
       return {
+        organizationName : "",
         firstName : "",
         lastName : "",
         email : "",
@@ -155,6 +169,7 @@
             return false;
           } else{
             let data = {
+              organizationName: this.organizationName,
               firstName: this.firstName,
               lastName: this.lastName,
               email: this.email,
@@ -169,6 +184,7 @@
     i18n: { // `i18n` option, setup locale info for component
       messages: {
         en: {
+          organizationName: 'organizationName',
           login: 'Login',
           register: 'Register',
           firstname: 'First Name',

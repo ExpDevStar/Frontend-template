@@ -30,8 +30,9 @@
     <v-toolbar color="primary" app absolute clipped-left>
       <v-toolbar-side-icon @click.native="drawer = !drawer"></v-toolbar-side-icon>
       <span class="title ml-3 mr-5">PPM</span>
+      <span class="ml-3 mr-5">{{orgName}}</span>
       <v-spacer></v-spacer>
-      <v-menu offset-y>
+      <v-menu offset-y left>
         <v-card
           slot="activator"
           class="portrait"
@@ -59,6 +60,7 @@
 export default {
   data: () => ({
       avatar: "",
+      orgName: "",
       drawer: null,
       profileItems: [
         {title: 'Settings', href: "settings"},
@@ -85,7 +87,8 @@ export default {
       source: String
     },
     mounted () {
-      this.getAvatar()
+      this.getAvatar(),
+      this.getOrgName()
     },
     computed : {
       isLoggedIn : function(){ return this.$store.getters.isLoggedIn}
@@ -93,8 +96,11 @@ export default {
     methods: {
       getAvatar: function (){
         const tempUser = JSON.parse(localStorage.user)
-        console.log(tempUser.avatar)
         this.avatar = tempUser.avatar
+      },
+      getOrgName: function (){
+        const tempUser = JSON.parse(localStorage.user)
+        this.orgName = tempUser.orgName
       }
     },
   }

@@ -33,10 +33,10 @@ export const authentication = {
           }
         );
     },
-    register({ dispatch, commit }, { email, password, passwordConfirm, firstName, lastName }) {
+    register({ dispatch, commit }, { email, password, passwordConfirm, firstName, lastName, organizationName }) {
       commit('registerRequest', { email });
 
-      userService.register(email, password, passwordConfirm, firstName, lastName)
+      userService.register(email, password, passwordConfirm, firstName, lastName, organizationName)
         .then(user => {
             commit('registerSuccess', user);
             router.push('/dashboard');

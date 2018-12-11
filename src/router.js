@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/pages/Home.vue'
 import Login from './views/pages/Login.vue'
 import Logout from './views/user/Logout.vue'
+import Settings from './views/user/Settings.vue'
 import Register from './views/pages/Register.vue'
 import Dashboard from './views/dashboard/Dashboard.vue'
 import DefaultContainer from './containers/DefaultContainer'
@@ -63,7 +64,7 @@ export default new Router({
         {
           path: '/settings',
           name: 'settings',
-          component: Logout,
+          component: Settings,
           meta: {
             requiresAuth: true
           },

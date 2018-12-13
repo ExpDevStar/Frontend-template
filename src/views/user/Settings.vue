@@ -1,16 +1,6 @@
 <template>
   <v-flex xs2>
     User Settings
-      <v-list>
-        <v-list-tile v-for="user in users" :key="user.id" avatar>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="user.name"></v-list-tile-title>
-          </v-list-tile-content>
-          <v-list-tile-avatar>
-            <img :src="user.avatar">
-          </v-list-tile-avatar>
-        </v-list-tile>
-      </v-list>
   </v-flex>
 </template>
 

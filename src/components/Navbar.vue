@@ -64,7 +64,8 @@ export default {
       drawer: null,
       profileItems: [
         {title: 'Settings', href: "settings"},
-        {title: 'Logout', href: "logout"}
+        {title: 'Logout', href: "logout"},
+        {title: 'Admin', href: "admin/users"}
       ],
       items: [
         { icon: 'fas fa-home', text: 'Home', href : '/dashboard' },

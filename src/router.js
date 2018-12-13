@@ -4,6 +4,7 @@ import Home from './views/pages/Home.vue'
 import Login from './views/pages/Login.vue'
 import Logout from './views/user/Logout.vue'
 import Settings from './views/user/Settings.vue'
+import AdminUsers from './views/admin/Users.vue'
 import Register from './views/pages/Register.vue'
 import Dashboard from './views/dashboard/Dashboard.vue'
 import DefaultContainer from './containers/DefaultContainer'
@@ -40,6 +41,19 @@ export default new Router({
       name: 'forgotpw',
       path: '/forgotpw',
       component: ForgotPW
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: DefaultContainer,
+      children: [{
+        path: 'users',
+        name: 'adminusers',
+        component: AdminUsers,
+        meta: {
+          requiresAuth: true
+        },
+      }]
     },
     {
       path: '/default',

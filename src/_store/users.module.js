@@ -1,4 +1,4 @@
-import { userService } from '../_services';
+import { UserService } from '../_services';
 
 export const users = {
   namespaced: true,
@@ -9,7 +9,7 @@ export const users = {
     getAll({ commit }) {
       commit('getAllRequest');
 
-      userService.getAll()
+      UserService.getAll()
         .then(
           users => commit('getAllSuccess', users),
           error => commit('getAllFailure', error)

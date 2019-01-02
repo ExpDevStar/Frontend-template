@@ -1,7 +1,7 @@
 <template>
   <v-flex xs2>
 
-    <div id="loading" v-if="loggingout">
+    <div id="loading">
       <trinity-rings-spinner
         :animation-duration="1500"
         :size="40"
@@ -14,32 +14,22 @@
 </template>
 
 <script>
-
-  import { mapState, mapActions } from 'vuex'
-
   export default {
     data () {
       return {
       }
     },
     computed: {
-      ...mapState({
-        alert: state => state.alert,
-        loggingout: state => state.authentication.status
-      })
+
     },
-    ...mapActions({
-        clearAlert: 'alert/clear'
-    }),
     mounted () {
       this.logout()
     },
     methods: {
       logout: function () {
-        this.$store.dispatch('authentication/logout')
-        .then(() => {
-          this.$router.push('/')
-        })
+        this.$store.dispatch("auth/logout").then(() => {
+          this.$router.push({ name: "index" });
+        });
       }
     }
   }

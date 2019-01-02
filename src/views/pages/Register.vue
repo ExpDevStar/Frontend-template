@@ -98,18 +98,20 @@
                   </v-text-field>
 
                 </v-form>
-                <v-alert dismissible :value="alert.message" icon="new_releases">{{alert.message}}</v-alert>
+                <ul v-if="authErrors" class="error-messages">
+                  <li v-for="(v, k) in authErrors" :key="k">{{ k }} {{ v | error }}</li>
+                </ul>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <div id="loading" v-if="isRegistering.registering == true">
+                <div id="loading" v-if="registeringStatus == 'registering'">
                   <trinity-rings-spinner
                     :animation-duration="1500"
                     :size="40"
                     color="#76FF03"
                   />
                 </div>
-                <v-btn color="primary" @click="handleRegister" :disabled="isRegistering.registering == true">{{ $t("register") }}</v-btn>
+                <v-btn color="primary" @click="handleRegister" :disabled="registeringStatus == 'registering'">{{ $t("register") }}</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -120,7 +122,8 @@
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex'
+  import { mapState } from "vuex";
+
   import { TrinityRingsSpinner } from 'epic-spinners'
   export default {
     components: {
@@ -131,7 +134,7 @@
         organizationName : "",
         firstName : "",
         lastName : "",
-        email : "",
+        email : "sicumecubo@veanlo.com",
         password : "",
         passwordConfirm : "",
         dictionary: {
@@ -148,27 +151,22 @@
       validator: 'new'
     },
     mounted () {
+      this.$store.dispatch('auth/resetState'),
       this.$validator.localize('en', this.dictionary)
-      this.$store.dispatch('alert/clear')
     },
     computed: {
-        ...mapState({
-            alert: state => state.alert,
-            isRegistering: state => state.authentication.status
-        })
+      ...mapState({
+        authErrors: state => state.auth.errors,
+        registeringStatus: state => state.auth.status,
+      })
     },
     methods: {
-      ...mapActions({
-          clearAlert: 'alert/clear'
-      }),
-      handleRegister: function () {
-        this.$store.dispatch('alert/clear')
+      handleRegister() {
         this.$validator.validateAll().then(result => {
           if (!result) {
-            console.log(result)
             return false;
-          } else{
-            let data = {
+          } else {
+            let xData = {
               organizationName: this.organizationName,
               firstName: this.firstName,
               lastName: this.lastName,
@@ -176,7 +174,9 @@
               password: this.password,
               passwordConfirm: this.passwordConfirm
             }
-            this.$store.dispatch('authentication/register', data);
+            this.$store.dispatch("auth/register", xData).then(() =>
+              this.$router.push({ name: "dashboard" }),
+            );
           }
         });
       }
@@ -184,7 +184,7 @@
     i18n: { // `i18n` option, setup locale info for component
       messages: {
         en: {
-          organizationName: 'organizationName',
+          organizationName: 'Organization Name',
           login: 'Login',
           register: 'Register',
           firstname: 'First Name',

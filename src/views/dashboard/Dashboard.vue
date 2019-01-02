@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>This page is protected by auth dashboard</h1>
+    <h1>Dashboard</h1>
   </div>
 </template>
 
@@ -8,5 +8,4 @@
   export default {
 
   }
-
 </script>

@@ -42,3 +42,11 @@ export default {
   }
 }
 </script>
+
+<style>
+  .required label::after {
+    content: " *";
+    color:red;
+  }
+
+</style>

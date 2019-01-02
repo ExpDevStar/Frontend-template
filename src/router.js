@@ -8,14 +8,14 @@ import AdminUsers from './views/admin/Users.vue'
 import Register from './views/pages/Register.vue'
 import Dashboard from './views/dashboard/Dashboard.vue'
 import DefaultContainer from './containers/DefaultContainer'
-import CapacityEntry from './views/capacityplanning/CapacityEntry'
 import ForgotPW from './views/pages/ForgotPW.vue'
 import ForgotPWReset from './views/pages/ForgotPWReset.vue'
+
 
 Vue.use(Router);
 
 export default new Router({
-  // mode: 'history',
+  mode: 'history',
   routes: [{
       name: 'index',
       path: '/',
@@ -79,14 +79,6 @@ export default new Router({
           path: '/settings',
           name: 'settings',
           component: Settings,
-          meta: {
-            requiresAuth: true
-          },
-        },
-        {
-          path: '/capacityplanning',
-          name: 'capacityplanning',
-          component: CapacityEntry,
           meta: {
             requiresAuth: true
           },

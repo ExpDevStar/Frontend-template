@@ -10,12 +10,16 @@ import icons from './app/icons'
 import VeeValidate from 'vee-validate';
 import VueI18n from 'vue-i18n';
 import validationMessagesEn from 'vee-validate/dist/locale/en';
-import validationMessagesEs from 'vee-validate/dist/locale/es';
 import { TrinityRingsSpinner } from 'epic-spinners'
+import ApiService from "./api";
 
+// Vue.use(VueAxios, axios)
 Vue.use(VueI18n);
-
 Vue.component('TrinityRingsSpinner', TrinityRingsSpinner)
+Vue.use(Vuetify, { theme: theme })
+
+//import { CHECK_AUTH } from "./_store/actions.type";
+
 
 const i18n = new VueI18n({
   locale: 'en' // set locale
@@ -25,20 +29,12 @@ Vue.use(VeeValidate, {
   i18nRootKey: 'validations', // customize the root path for validation messages.
   i18n,
   dictionary: {
-    en: validationMessagesEn,
-    es: validationMessagesEs
+    en: validationMessagesEn
   }
 });
 
-Vue.use(Vuetify)
-
-const token = localStorage.getItem('token')
-if (token) {
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-}
-
 Vue.config.productionTip = false
-
+ApiService.init();
 // redirect to login page if not logged in and trying to access a restricted page
 router.beforeEach((to, from, next) => {
   const publicPages = ['login', 'register', 'index', 'forgotpw', 'passwordreset'];
@@ -47,9 +43,9 @@ router.beforeEach((to, from, next) => {
   if (authRequired && !loggedIn) {
     return next('/login');
   }
-  next();
+  next()
+  // Promise.all([store.dispatch(CHECK_AUTH)]).then(next)
 })
-
 
 new Vue({
   el: '#app',
@@ -60,6 +56,5 @@ new Vue({
   template: '<App/>',
   components: { App },
   render: h => h(App),
-  theme: theme,
   icons: icons
 });

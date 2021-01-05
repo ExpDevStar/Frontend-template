@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.5.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "epic-spinners": "^1.0.4",
     "jwt-decode": "^2.2.0",
     "vee-validate": "^2.1.3",
